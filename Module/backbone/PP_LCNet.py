@@ -224,5 +224,7 @@ if __name__ == '__main__':
     output = model(input)
     print(output.shape) # torch.Size([2, 10]) num_classes
 
+    # from https://github.com/OutBreak-hui/Yolov5-PP-LCNet/blob/main/PP_LCNet/LCNet.py
+
 
 

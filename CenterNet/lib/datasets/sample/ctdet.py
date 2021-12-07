@@ -39,3 +39,23 @@ class CTDetDataset(data.Dataset):
             input_h, input_w = self.opt.input_h, self.opt.input_w
 
         flipped = False
+        if self.split == 'train':
+            if not self.opt.not_rand_crop:
+                s = s*np.random.choice(np.arange(0.6,1.4,0.1))
+                w_border = self._get_border(128, img.shape[1])
+                h_border = self._get_border(128, img.shape[0])
+                c[0] = np.random.randint(low=w_border, high=img.shape[1] - w_border)
+                c[1] = np.random.randint(low=h_border, high=img.shape[0] - h_border)
+            else:
+                sf = self.opt.scale
+                cf = self.opt.shift
+                c[0] += s * np.clip(np.random.randn() * cf, -2 * cf, 2 * cf)
+                c[1] += s * np.clip(np.random.randn() * cf, -2 * cf, 2 * cf)
+                s = s * np.clip(np.random.randn() * sf + 1, 1 - sf, 1 + sf)
+
+            if np.random.random() < self.opt.flip():
+                flipped=True
+                img = img[:, ::-1, :]
+                c[0] = width - c[0] - 1
+
+        trans_input = get_affine_transform(c,s,0,[input_w,input_h])

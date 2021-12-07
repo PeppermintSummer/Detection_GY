@@ -10,10 +10,10 @@ dataset_factory = {
   # 'coco_hp': COCOHP
 }
 _sample_factory = {
-  'exdet': EXDetDataset,
+  # 'exdet': EXDetDataset,
   'ctdet': CTDetDataset,
-  'ddd': DddDataset,
-  'multi_pose': MultiPoseDataset
+  # 'ddd': DddDataset,
+  # 'multi_pose': MultiPoseDataset
 }
 
 
